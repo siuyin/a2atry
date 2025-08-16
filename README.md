@@ -15,3 +15,5 @@ And in the official spec: https://github.com/a2aproject/A2A/blob/00cf76e7bbc7528
 we also have `MessageSendParams`.
 
 This means `samples` is out of date with respect to the official spec.
+
+However `samples` is still a good guide. I just have to strictly only use https://github.com/a2aproject/a2a-go for Params.

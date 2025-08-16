@@ -56,13 +56,15 @@ func main() {
 					Description: "a skill that gets the current time in UTC"},
 			},
 		},
+		port:     port,
 		basePath: "/",
 		handler:  utcTime,
 	}
 
-	svr.Start()
+	log.Fatal(svr.Start())
 }
 
 func utcTime(task *a2a.Task, msg *a2a.Message) (*a2a.Task, error) {
+	log.Println("utctime called")
 	return &a2a.Task{}, nil
 }

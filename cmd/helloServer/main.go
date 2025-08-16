@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
@@ -33,7 +34,7 @@ func (s *A2AServer) Start() error {
 // ServeHTTP implements the http.Handler interface
 func (s *A2AServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(w, fmt.Sprintf("%s: Method not allowed", r.Method), http.StatusMethodNotAllowed)
 		return
 	}
 }

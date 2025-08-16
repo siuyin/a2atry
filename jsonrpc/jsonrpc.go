@@ -1,5 +1,18 @@
 package jsonrpc
 
+const (
+	MessageSend                       = "message/send"
+	MessageStream                     = "message/stream"
+	TasksGet                          = "tasks/get"
+	TasksCancel                       = "tasks/cancel"
+	TasksPushNotificationConfigSet    = "tasks/pushNotificationConfig/set"
+	TasksPushNotificationConfigGet    = "tasks/pushNotificationConfig/get"
+	TasksPushNotificationConfigList   = "tasks/pushNotificationConfig/list"
+	TasksPushNotificationConfigDelete = "tasks/pushNotificationConfig/delete"
+	TasksResubscribe                  = "tasks/resubscribe"
+	AgentGetAuthenticatedExtendedCard = "agent/getAuthenticatedExtendedCard"
+)
+
 // MessageIdentifier represents the base interface for identifying JSON-RPC messages
 type MessageIdentifier struct {
 	// ID is the request identifier. Can be a string, number, or null.

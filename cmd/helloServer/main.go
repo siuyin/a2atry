@@ -1,12 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"sync"
 
 	"github.com/a2aproject/a2a-go/a2a"
+	"github.com/siuyin/a2atry/jsonrpc"
 	"github.com/siuyin/dflt"
 )
 
@@ -37,6 +40,33 @@ func (s *A2AServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("%s: Method not allowed", r.Method), http.StatusMethodNotAllowed)
 		return
 	}
+
+	rpc := jsonrpc.Request{}
+	defer r.Body.Close()
+	dat, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println("read body: ", err)
+	}
+	if err := json.Unmarshal(dat, &rpc); err != nil {
+		log.Println("unmarshal: ", err)
+	}
+
+	// extract the payload the call the handler
+	fmt.Println(rpc.Method)
+
+	p := rpc.Params
+	fmt.Printf("%s\n", p)
+	msp := a2a.MessageSendParams{}
+	if err := json.Unmarshal(p, &msp); err != nil {
+		log.Fatal("param unmarshal: ", err)
+	}
+
+	fmt.Printf("MesssageID: %d\n", msp.Message.MessageID)
+
+	task := &a2a.Task{}
+	msg := &a2a.Message{}
+	res, _ := utcTime(task, msg)
+	encodeAndSend(w, res)
 }
 
 func main() {
@@ -68,4 +98,8 @@ func main() {
 func utcTime(task *a2a.Task, msg *a2a.Message) (*a2a.Task, error) {
 	log.Println("utctime called")
 	return &a2a.Task{}, nil
+}
+func encodeAndSend(w http.ResponseWriter, task *a2a.Task) {
+	io.WriteString(w, "Hello")
+	log.Println("encoded and sent")
 }

@@ -1,5 +1,7 @@
 package jsonrpc
 
+import "encoding/json"
+
 const (
 	MessageSend                       = "message/send"
 	MessageStream                     = "message/stream"
@@ -34,7 +36,7 @@ type Request struct {
 	// Method is the name of the method to be invoked
 	Method string `json:"method"`
 	// Params are the parameters for the method
-	Params interface{} `json:"params,omitempty"`
+	Params json.RawMessage `json:"params,omitempty"`
 }
 
 // Error represents a JSON-RPC error object

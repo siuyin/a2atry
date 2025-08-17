@@ -1,4 +1,6 @@
 github.com/a2aproject/a2a-go v0.0.0-20250812200156-143403d47d85 h1:oIocqtJl1IWZ37yIoh1/6W5GRlFN19IrrSfQG0CkPzg=
 github.com/a2aproject/a2a-go v0.0.0-20250812200156-143403d47d85/go.mod h1:aIJnmNfrWlbdIyEf/fgWzmK/5/Xndf3k7T9LCqhH760=
+github.com/nats-io/nuid v1.0.1 h1:5iA8DT8V7q8WK2EScv2padNa/rTESc1KdnPw4TC2paw=
+github.com/nats-io/nuid v1.0.1/go.mod h1:19wcPz3Ph3q0Jbyiqsd0kePYG7A95tJPxeL+1OSON2c=
 github.com/siuyin/dflt v0.0.0-20230329062002-0475f4d54412 h1:wa75y3NwGEDSzxJ0dPdIadS0hCA4Jbq0m1RZoksrHR8=
 github.com/siuyin/dflt v0.0.0-20230329062002-0475f4d54412/go.mod h1:+WsKak36sIJb+W3/mAlKWpfpWdo2y7tv3/zxu6YE9O4=

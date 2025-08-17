@@ -3,6 +3,7 @@
 Trying out this:
 https://github.com/trpc-group/trpc-agent-go 
 
+cmd/helloServer and cmd/helloClient are direct copies of https://github.com/trpc-group/trpc-a2a-go/tree/e0bccf0ef012d7e062d4b1a8906388d17f94b046/examples/simple .
 
 I previously tried, without success:
 - https://github.com/a2aproject/a2a-go

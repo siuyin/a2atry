@@ -1,10 +1,14 @@
 # A2A (Agent to Agent) Protocol experiments.
 
-The code in this repository is based on:
+Trying out this:
+https://github.com/trpc-group/trpc-agent-go 
+
+
+I previously tried, without success:
 - https://github.com/a2aproject/a2a-go
 - https://github.com/a2aproject/a2a-samples/tree/main/samples/go
 
-## Observations
+## Observations on the a2aproject/a2a-go SDK
 The protocol spec as of 16 Aug 2025 is at v0.3 and is still fluid.
 
 For example: https://github.com/a2aproject/a2a-samples/blob/dbd790fc65be9a7c7de8fd64f22cc45872bf4d44/samples/go/models/requests.go#L4

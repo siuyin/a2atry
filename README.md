@@ -17,3 +17,5 @@ we also have `MessageSendParams`.
 This means `samples` is out of date with respect to the official spec.
 
 However `samples` is still a good guide. I just have to strictly only use https://github.com/a2aproject/a2a-go for Params.
+
+Stuck: the A2A offical Go SDK is problematic. Fields with type interface{} have deserialzation issues.

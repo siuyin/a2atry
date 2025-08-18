@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
+
+	"trpc.group/trpc-go/trpc-a2a-go/log"
 
 	"github.com/siuyin/a2atry/ptr"
 	"github.com/siuyin/dflt"
@@ -21,8 +22,8 @@ func (t *timeAgent) ProcessMessage(ctx context.Context, msg spec.Message, opts t
 
 func main() {
 	port := dflt.EnvString("PORT", "8080")
-	log.Printf("PORT=%s", port)
-	fmt.Printf("curl http://localhost:%s/.well-known/agent.json for agent card\n", port)
+	log.Infof("PORT=%s", port)
+	log.Infof("curl http://localhost:%s/.well-known/agent.json for agent card", port)
 
 	svr, err := server.NewA2AServer(myAgentCard(port), myTaskManager(&timeAgent{}))
 	if err != nil {

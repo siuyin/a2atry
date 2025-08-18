@@ -12,6 +12,7 @@ import (
 	tm "trpc.group/trpc-go/trpc-a2a-go/taskmanager"
 )
 
+// timeAgent satisfies the tm.MessageProcessor interface.
 type timeAgent struct{}
 
 func (t *timeAgent) ProcessMessage(ctx context.Context, msg spec.Message, opts tm.ProcessOptions, handler tm.TaskHandler) (*tm.MessageProcessingResult, error) {
@@ -21,11 +22,13 @@ func (t *timeAgent) ProcessMessage(ctx context.Context, msg spec.Message, opts t
 func main() {
 	port := dflt.EnvString("PORT", "8080")
 	log.Printf("PORT=%s", port)
+	fmt.Printf("curl http://localhost:%s/.well-known/agent.json for agent card\n", port)
 
 	svr, err := server.NewA2AServer(myAgentCard(port), myTaskManager(&timeAgent{}))
 	if err != nil {
 		log.Fatal("new server:", err)
 	}
+
 	log.Fatal(svr.Start(":" + port))
 }
 

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"trpc.group/trpc-go/trpc-a2a-go/log"
@@ -19,9 +20,10 @@ import (
 type timeAgent struct{}
 
 func (t *timeAgent) ProcessMessage(ctx context.Context, m spec.Message, opts tm.ProcessOptions, handler tm.TaskHandler) (*tm.MessageProcessingResult, error) {
-	log.Info("received input: ", msg.Text(m))
+	txt := msg.Text(m)
+	log.Info("received input: ", txt)
 
-	s := fmt.Sprintf("The time in UTC is %s.\n", time.Now().UTC().Format("15:04:05.000"))
+	s := timeFor(txt)
 	resp := spec.NewMessage(
 		spec.MessageRoleAgent,
 		[]spec.Part{spec.NewTextPart(s)},
@@ -70,4 +72,49 @@ func myTaskManager(mp tm.MessageProcessor) tm.TaskManager {
 	}
 
 	return mgr
+}
+
+func timeFor(loc string) string {
+	tz, ok := tzOf(loc)
+	if !ok {
+		return "unsupported location"
+	}
+	l, err := time.LoadLocation(tz)
+	if err != nil {
+		log.Error("timeFor: ", err, tz)
+		return ""
+	}
+	return time.Now().In(l).Format("15:04:05.000")
+}
+
+func tzOf(loc string) (string, bool) {
+	tz := make(map[string]string)
+	tz["singapore"] = "Asia/Singapore"
+	tz["sgp"] = "Asia/Singapore"
+	tz["new york"] = "America/New_York"
+	tz["los angeles"] = "America/Los_Angeles"
+
+	keys := keysOfMap(tz)
+	l, ok := supportedLocation(loc, keys)
+	if !ok {
+		return "UTC", false
+	}
+	return tz[l], true
+}
+
+func keysOfMap[T any](m map[string]T) []string {
+	keys := []string{}
+	for k := range m {
+		keys = append(keys, k)
+	}
+	return keys
+}
+func supportedLocation(loc string, db []string) (string, bool) {
+	loc = strings.ToLower(loc)
+	for _, v := range db {
+		if strings.Contains(loc, v) {
+			return v, true
+		}
+	}
+	return "", false
 }

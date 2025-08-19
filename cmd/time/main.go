@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"trpc.group/trpc-go/trpc-a2a-go/log"
+	"trpc.group/trpc-go/trpc-a2a-go/protocol"
 
 	"github.com/siuyin/a2atry/ptr"
 	"github.com/siuyin/dflt"
@@ -17,7 +19,16 @@ import (
 type timeAgent struct{}
 
 func (t *timeAgent) ProcessMessage(ctx context.Context, msg spec.Message, opts tm.ProcessOptions, handler tm.TaskHandler) (*tm.MessageProcessingResult, error) {
-	return &tm.MessageProcessingResult{}, nil
+	log.Info("received input: ", extractText(msg))
+
+	s := fmt.Sprintf("The time in UTC is %s.\n", time.Now().UTC().Format("15:04:05.000"))
+	resp := spec.NewMessage(
+		spec.MessageRoleAgent,
+		[]spec.Part{spec.NewTextPart(s)},
+	)
+
+	log.Info("sending output: ", s)
+	return &tm.MessageProcessingResult{Result: &resp}, nil
 }
 
 func main() {
@@ -59,4 +70,13 @@ func myTaskManager(mp tm.MessageProcessor) tm.TaskManager {
 	}
 
 	return mgr
+}
+
+func extractText(message protocol.Message) string {
+	for _, part := range message.Parts {
+		if textPart, ok := part.(*protocol.TextPart); ok {
+			return textPart.Text
+		}
+	}
+	return ""
 }
